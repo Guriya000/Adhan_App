@@ -259,11 +259,82 @@ class _MyScreenState extends State<MyScreen> {
       if (prayerDateTime.isAfter(now)) {
         final duration = prayerDateTime.difference(now);
         Timer(duration, () {
+          _showNotification(prayer);
           _playAdhaan();
         });
       }
     }
   }
+
+  void _showNotification(String prayer) async {
+    FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+        FlutterLocalNotificationsPlugin();
+
+    const AndroidInitializationSettings initializationSettingsAndroid =
+        AndroidInitializationSettings('app_icon');
+
+    final InitializationSettings initializationSettings =
+        InitializationSettings(android: initializationSettingsAndroid);
+
+    await flutterLocalNotificationsPlugin.initialize(initializationSettings);
+
+    const AndroidNotificationDetails androidPlatformChannelSpecifics =
+        AndroidNotificationDetails(
+      'adhan_channel',
+      'Adhan Notifications',
+      channelDescription: 'Channel for Adhan notifications',
+      importance: Importance.max,
+      priority: Priority.high,
+      showWhen: false,
+    );
+
+    const NotificationDetails platformChannelSpecifics =
+        NotificationDetails(android: androidPlatformChannelSpecifics);
+
+    await flutterLocalNotificationsPlugin.show(
+      0,
+      'Prayer Time',
+      'It\'s time for $prayer prayer',
+      platformChannelSpecifics,
+      payload: 'item x',
+    );
+  }
+
+  // void _scheduleAdhaan() async {
+  //   final timings = await fetchSunTimings();
+  //   final prayerTimes = timings.results.calculatePrayerTimes();
+
+  //   final now = DateTime.now();
+
+  //   for (var prayer in ['Fajr', 'Dhuhr', 'Asr', 'Maghrib', 'Isha']) {
+  //     final prayerTime = prayerTimes[prayer]!;
+  //     final prayerTimeParts = prayerTime.split(' ');
+  //     final timeParts = prayerTimeParts[0].split(':');
+  //     int hour = int.parse(timeParts[0]);
+  //     final minute = int.parse(timeParts[1]);
+
+  //     if (prayerTimeParts[1] == 'PM' && hour != 12) {
+  //       hour += 12;
+  //     } else if (prayerTimeParts[1] == 'AM' && hour == 12) {
+  //       hour = 0;
+  //     }
+
+  //     final prayerDateTime = DateTime(
+  //       now.year,
+  //       now.month,
+  //       now.day,
+  //       hour,
+  //       minute,
+  //     );
+
+  //     if (prayerDateTime.isAfter(now)) {
+  //       final duration = prayerDateTime.difference(now);
+  //       Timer(duration, () {
+  //         _playAdhaan();
+  //       });
+  //     }
+  //   }
+  // }
 
   void _playAdhaan() async {
     final player = AudioCache(prefix: 'assets/');
@@ -387,8 +458,6 @@ class _MyScreenState extends State<MyScreen> {
                                   Container(
                                     height: 40,
                                     width: 40,
-
-                                    
                                     child: Image.asset("assets/sun-shine.png"),
                                   ),
                                   FutureBuilder<SunTimings>(
