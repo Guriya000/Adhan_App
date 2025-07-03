@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:math';
 import 'dart:ui';
 
 import 'package:adhaan_app/SunriseSunsetData.dart';
@@ -352,313 +353,313 @@ class _MyScreenState extends State<MyScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            Stack(
-              children: [
-                Container(
-                  height: 280,
-                  width: double.infinity,
-                  decoration: const BoxDecoration(
-                      image: DecorationImage(
-                          image: AssetImage("assets/mosque.jpg"),
-                          fit: BoxFit.cover)),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.only(top: 60, left: 18),
-                        child: Container(
-                          width: 100,
-                          decoration: BoxDecoration(
-                              backgroundBlendMode: BlendMode.overlay,
-                              color: Colors.blue.shade100.withOpacity(0.5),
-                              border: Border.all(color: Colors.black, width: 1),
-                              borderRadius: BorderRadius.circular(8)),
-                          child: Padding(
-                            padding: const EdgeInsets.all(4.0),
-                            child: Row(
-                              children: [
-                                const Icon(
-                                  Icons.location_on,
-                                  size: 18,
-                                  color: Colors.red,
-                                ),
-                                const SizedBox(
-                                  width: 3,
-                                ),
-                                Text(
-                                  _areaName,
-                                  style: const TextStyle(
-                                      color: Colors.black,
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.w900),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(top: 160, left: 15, right: 15),
-                  child: Container(
-                    height: 150,
-                    width: double.infinity,
-                    decoration: BoxDecoration(
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.grey.withOpacity(0.6),
-                          blurRadius: 10,
-                          spreadRadius: 5,
-                        ),
-                      ],
-                      backgroundBlendMode: BlendMode.overlay,
-                      color: Colors.blue.shade100,
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    child: Padding(
-                      padding:
-                          const EdgeInsets.only(left: 15, right: 15, top: 8),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            _hijriDate,
-                            style: const TextStyle(
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.black),
-                          ),
-                          Text(
-                            _currentDate,
-                            style: const TextStyle(
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.black),
-                          ),
-                          Text(
-                            _currentDay,
-                            style: const TextStyle(
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.black),
-                          ),
-                          const SizedBox(
-                            height: 27.5,
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      body: Column(
+        children: [
+          Stack(
+            children: [
+              Container(
+                height: 280,
+                width: double.infinity,
+                decoration: const BoxDecoration(
+                    image: DecorationImage(
+                        image: AssetImage("assets/mosque.jpg"),
+                        fit: BoxFit.cover)),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(top: 60, left: 18),
+                      child: Container(
+                        width: 100,
+                        decoration: BoxDecoration(
+                            backgroundBlendMode: BlendMode.overlay,
+                            color: Colors.blue.shade100.withOpacity(0.5),
+                            border: Border.all(color: Colors.black, width: 1),
+                            borderRadius: BorderRadius.circular(8)),
+                        child: Padding(
+                          padding: const EdgeInsets.all(4.0),
+                          child: Row(
                             children: [
-                              Row(
-                                children: [
-                                  Container(
-                                    height: 40,
-                                    width: 40,
-                                    child: Image.asset("assets/sun-shine.png"),
-                                  ),
-                                  FutureBuilder<SunTimings>(
-                                      future: fetchSunTimings(),
-                                      builder: (context, snapshot) {
-                                        if (snapshot.hasData) {
-                                          final data = snapshot.data;
-                                          return Column(
-                                            children: [
-                                              const Text("Sunrise",
-                                                  style: TextStyle(
-                                                      fontSize: 16,
-                                                      fontWeight:
-                                                          FontWeight.w800)),
-                                              Text(data!.results.sunrise,
-                                                  style: const TextStyle(
-                                                      fontSize: 12,
-                                                      fontWeight:
-                                                          FontWeight.w500)),
-                                            ],
-                                          );
-                                        } else {
-                                          return const Text("null");
-                                        }
-                                      })
-                                ],
+                              const Icon(
+                                Icons.location_on,
+                                size: 18,
+                                color: Colors.red,
                               ),
-                              Row(
-                                children: [
-                                  Container(
-                                    height: 40,
-                                    width: 40,
-                                    child: Image.asset("assets/sunset.png"),
-                                  ),
-                                  FutureBuilder<SunTimings>(
-                                      future: fetchSunTimings(),
-                                      builder: (context, snapshot) {
-                                        if (snapshot.hasData) {
-                                          final data = snapshot.data;
-                                          return Column(
-                                            children: [
-                                              const Text("Sunset",
-                                                  style: TextStyle(
-                                                      fontSize: 16,
-                                                      fontWeight:
-                                                          FontWeight.w800)),
-                                              Text(data!.results.sunset,
-                                                  style: const TextStyle(
-                                                      fontSize: 12,
-                                                      fontWeight:
-                                                          FontWeight.w500)),
-                                            ],
-                                          );
-                                        } else {
-                                          return const Text("null");
-                                        }
-                                      }),
-                                ],
+                              const SizedBox(
+                                width: 3,
+                              ),
+                              Text(
+                                _areaName,
+                                style: const TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.w900),
                               ),
                             ],
-                          )
-                        ],
+                          ),
+                        ),
                       ),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-            const SizedBox(
-              height: 10,
-            ),
-            Padding(
-              padding: const EdgeInsets.only(right: 15, left: 15),
-              child: Container(
-                height: 40,
-                width: double.infinity,
-                decoration: BoxDecoration(
-                  color: Colors.lightGreen.shade100,
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.grey.withOpacity(0.5),
-                      blurRadius: 10,
-                      spreadRadius: 5,
                     ),
                   ],
-                  border: Border.all(color: Colors.green.shade200, width: 1),
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      const Text(
-                        "Next Prayer Time: ",
-                        style: TextStyle(
-                            fontSize: 18, fontWeight: FontWeight.w800),
-                      ),
-                      const SizedBox(
-                        width: 15,
-                      ),
-                      FutureBuilder(
-                          future: getNextPrayerTime(),
-                          builder: (context, snapshot) {
-                            if (snapshot.connectionState ==
-                                ConnectionState.waiting) {
-                              // ignore: prefer_const_constructors
-                              return Text("Loading...",
-                                  style: const TextStyle(
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.w200));
-                            } else if (snapshot.hasData) {
-                              final data = snapshot.data;
-                              return Text(data.toString(),
-                                  style: const TextStyle(
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.w800));
-                            } else {
-                              return const Text("null");
-                            }
-                          })
-                    ],
-                  ),
                 ),
               ),
-            ),
-            const SizedBox(
-              height: 15,
-            ),
-            FutureBuilder(
-                future: fetchSunTimings(),
-                builder: (context, snapshot) {
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    return const Center(
-                      child: Text(
-                        "Loading...",
-                        style: TextStyle(
-                            fontSize: 20, fontWeight: FontWeight.w900),
+              Padding(
+                padding: const EdgeInsets.only(top: 160, left: 15, right: 15),
+                child: Container(
+                  height: 150,
+                  width: double.infinity,
+                  decoration: BoxDecoration(
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey.withOpacity(0.6),
+                        blurRadius: 10,
+                        spreadRadius: 5,
                       ),
-                    );
-                  } else {
-                    final timings = snapshot.data!.results;
-                    final prayerTimes = timings.calculatePrayerTimes();
-                    _scheduleAdhaan();
-                    return Column(
+                    ],
+                    backgroundBlendMode: BlendMode.overlay,
+                    color: Colors.blue.shade100,
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.only(left: 15, right: 15, top: 8),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
+                        Text(
+                          _hijriDate,
+                          style: const TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.black),
+                        ),
+                        Text(
+                          _currentDate,
+                          style: const TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.black),
+                        ),
+                        Text(
+                          _currentDay,
+                          style: const TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.black),
+                        ),
+                        const SizedBox(
+                          height: 27.5,
+                        ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
-                            PrayerWidget(
-                                prayerName: "Fajr",
-                                tilecolor: Colors.blue.shade200,
-                                prayerTime: prayerTimes['Fajr']!,
-                                prayerImage: Image.asset("assets/fajr.png")),
-                            PrayerWidget(
-                                prayerName: "Dhuhar",
-                                tilecolor: Colors.pink.shade200,
-                                prayerTime: prayerTimes['Dhuhr']!,
-                                prayerImage: Image.asset("assets/zohar.png")),
-                          ],
-                        ),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            PrayerWidget(
-                                prayerName: "Asr",
-                                tilecolor: Colors.amber.shade200,
-                                prayerTime: prayerTimes['Asr']!,
-                                prayerImage: Image.asset("assets/asr.png")),
-                            PrayerWidget(
-                                prayerName: "Maghrib",
-                                tilecolor: Colors.green.shade200,
-                                prayerTime: prayerTimes['Maghrib']!,
-                                prayerImage: Image.asset("assets/maghrib.png")),
-                          ],
-                        ),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            const SizedBox(
-                              width: 27,
+                            Row(
+                              children: [
+                                Container(
+                                  height: 40,
+                                  width: 40,
+                                  child: Image.asset("assets/sun-shine.png"),
+                                ),
+                                FutureBuilder<SunTimings>(
+                                    future: fetchSunTimings(),
+                                    builder: (context, snapshot) {
+                                      if (snapshot.hasData) {
+                                        final data = snapshot.data;
+                                        return Column(
+                                          children: [
+                                            const Text("Sunrise",
+                                                style: TextStyle(
+                                                    fontSize: 16,
+                                                    fontWeight:
+                                                        FontWeight.w800)),
+                                            Text(data!.results.sunrise,
+                                                style: const TextStyle(
+                                                    fontSize: 12,
+                                                    fontWeight:
+                                                        FontWeight.w500)),
+                                          ],
+                                        );
+                                      } else {
+                                        return const Text("null");
+                                      }
+                                    })
+                              ],
                             ),
-                            PrayerWidget(
-                                prayerName: "Esha",
-                                tilecolor: Colors.purple.shade200,
-                                prayerTime: prayerTimes['Isha']!,
-                                prayerImage: Image.asset("assets/esha.png")),
+                            Row(
+                              children: [
+                                Container(
+                                  height: 40,
+                                  width: 40,
+                                  child: Image.asset("assets/sunset.png"),
+                                ),
+                                FutureBuilder<SunTimings>(
+                                    future: fetchSunTimings(),
+                                    builder: (context, snapshot) {
+                                      if (snapshot.hasData) {
+                                        final data = snapshot.data;
+                                        return Column(
+                                          children: [
+                                            const Text("Sunset",
+                                                style: TextStyle(
+                                                    fontSize: 16,
+                                                    fontWeight:
+                                                        FontWeight.w800)),
+                                            Text(data!.results.sunset,
+                                                style: const TextStyle(
+                                                    fontSize: 12,
+                                                    fontWeight:
+                                                        FontWeight.w500)),
+                                          ],
+                                        );
+                                      } else {
+                                        return const Text("null");
+                                      }
+                                    }),
+                              ],
+                            ),
                           ],
                         )
                       ],
-                    );
-                  }
-                }),
-          ],
-        ),
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(
+            height: 10,
+          ),
+          Padding(
+            padding: const EdgeInsets.only(right: 17, left: 17),
+            child: Container(
+              height: 40,
+              width: double.infinity,
+              decoration: BoxDecoration(
+                gradient: LinearGradient(colors: [
+                  Colors.blue.shade100,
+                  Colors.teal.shade100,
+                  Colors.deepOrange.shade100
+                ], transform: GradientRotation(pi / 20)),
+                // color: Colors.lightGreen.shade100,
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey.withOpacity(0.5),
+                    blurRadius: 10,
+                    spreadRadius: 5,
+                  ),
+                ],
+
+                borderRadius: BorderRadius.circular(8),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    const Text(
+                      "Next Prayer Time: ",
+                      style:
+                          TextStyle(fontSize: 18, fontWeight: FontWeight.w800),
+                    ),
+                    const SizedBox(
+                      width: 15,
+                    ),
+                    FutureBuilder(
+                        future: getNextPrayerTime(),
+                        builder: (context, snapshot) {
+                          if (snapshot.connectionState ==
+                              ConnectionState.waiting) {
+                            // ignore: prefer_const_constructors
+                            return Text("Loading...",
+                                style: const TextStyle(
+                                    fontSize: 14, fontWeight: FontWeight.w200));
+                          } else if (snapshot.hasData) {
+                            final data = snapshot.data;
+                            return Text(data.toString(),
+                                style: const TextStyle(
+                                    fontSize: 14, fontWeight: FontWeight.w800));
+                          } else {
+                            return const Text("null");
+                          }
+                        })
+                  ],
+                ),
+              ),
+            ),
+          ),
+          const SizedBox(
+            height: 15,
+          ),
+          FutureBuilder(
+              future: fetchSunTimings(),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const Center(
+                    child: Text(
+                      "Loading...",
+                      style:
+                          TextStyle(fontSize: 20, fontWeight: FontWeight.w900),
+                    ),
+                  );
+                } else {
+                  final timings = snapshot.data!.results;
+                  final prayerTimes = timings.calculatePrayerTimes();
+                  _scheduleAdhaan();
+                  return Column(
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          PrayerWidget(
+                              prayerName: "Fajr",
+                              tilecolor: Colors.brown.shade100,
+                              prayerTime: prayerTimes['Fajr']!,
+                              prayerImage: Image.asset("assets/fajr.png")),
+                          PrayerWidget(
+                              prayerName: "Dhuhar",
+                              tilecolor: Colors.pink.shade100,
+                              prayerTime: prayerTimes['Dhuhr']!,
+                              prayerImage: Image.asset("assets/zohar.png")),
+                        ],
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          PrayerWidget(
+                              prayerName: "Asr",
+                              tilecolor: Colors.amber.shade100,
+                              prayerTime: prayerTimes['Asr']!,
+                              prayerImage: Image.asset("assets/asr.png")),
+                          PrayerWidget(
+                              prayerName: "Maghrib",
+                              tilecolor: Colors.green.shade100,
+                              prayerTime: prayerTimes['Maghrib']!,
+                              prayerImage: Image.asset("assets/maghrib.png")),
+                        ],
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          const SizedBox(
+                            width: 27,
+                          ),
+                          PrayerWidget(
+                              prayerName: "Esha",
+                              tilecolor: Colors.purple.shade100,
+                              prayerTime: prayerTimes['Isha']!,
+                              prayerImage: Image.asset("assets/esha.png")),
+                        ],
+                      )
+                    ],
+                  );
+                }
+              }),
+        ],
       ),
       floatingActionButton: FloatingActionButton(
           backgroundColor: Colors.lightGreen.shade100,
